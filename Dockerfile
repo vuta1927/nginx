@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
-RUN apt-get update && apt-get install -y openssh-server net-tools supervisor nano build-essential libpcre3 libpcre3-dev libssl-dev git
-RUN mkdir /var/run/sshd && mkdir log
+RUN apt-get update && apt-get install -y openssh-server net-tools iputils-ping supervisor nano build-essential libpcre3 libpcre3-dev libssl-dev git ffmpeg
+RUN mkdir /var/run/sshd && mkdir logs
 RUN useradd vuta && echo 'vuta:Echo@1927' | chpasswd
 RUN echo adduser vuta sudo
 RUN echo 'root:Echo@1927' | chpasswd
@@ -28,5 +28,5 @@ RUN mkdir -p /var/demo_videos
 COPY demo.mp4 /var/demo_videos
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-EXPOSE 80 1935 22
+EXPOSE 8080 1935 22
 CMD ["supervisord", "-c","/etc/supervisor/supervisord.conf"]
