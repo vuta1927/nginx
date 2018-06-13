@@ -20,12 +20,11 @@ RUN wget http://nginx.org/download/nginx-1.15.0.tar.gz
 RUN tar xzf nginx-1.15.0.tar.gz
 
 WORKDIR /build/nginx-1.15.0
-RUN ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module
+RUN ./configure --with-http_ssl_module --with-http_secure_link_module --add-module=../nginx-rtmp-module
 RUN make
 RUN make install
 
 RUN mkdir -p /var/demo_videos
-COPY demo.mp4 /var/demo_videos
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 EXPOSE 8080 1935 22
